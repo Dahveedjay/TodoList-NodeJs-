@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="todoApp">
+            <h2>To-Do List <img src="/images/todo.png" alt=""></h2>
+            <form action="/" method="post">
+                <div class="row">
+                    <input type="text" id="inputBox" class="todo" name="todo" placeholder="Add your text">
+                    <button type="submit" class="add">Add</button>
+                </div>
+            </form>
+            <ul id="listContainer">
+                {{#each allTodo}}
+                <li class="list">
+                    <div class="top-list">
+                        <p class="{{#if completed}}todo-item{{/if}}">{{title}}</p>
+                        <p class="action-btn">
+                            <span class="delete"><a href="/delete/{{_id}}">×</a></span>
+                            <span class="complete"><a href="/update/{{_id}}">✓</a></span>
+                            <span class="edit-todo">edit</span>
+                        </p>
+                    </div>
+                    <form action="/edit/{{_id}}" method="post" class="form-field">
+                        <div class="row">
+                            <input type="text" id="inputBox" class="edit" name="title" placeholder="Add your text">
+                            <button type="submit" class="edit">Edit</button>
+                        </div>
+                    </form>
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <script src="/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let successMessage = "{{success}}"
+        let errorMessage = "{{error}}"
+        if(successMessage){
+            Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: successMessage,
+        });
+        }
+        if(errorMessage){
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: errorMessage,
+        });
+        }
+    </script>
+</body>
+
+</html>
